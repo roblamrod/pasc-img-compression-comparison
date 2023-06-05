@@ -1,0 +1,19 @@
+import struct
+import zlib
+
+from PIL import Image
+
+PNG_HEADER = b'\x89\x50\x4e\x47\x0d\x0a\x1a\x0a'
+IHDR = b'\x00\x00\x00\x0d\x49\x48\x44\x52\x00\x00\x00\x02\x00\x00\x00\x02\x08\x02\x00\x00\x00'
+IHDR += struct.pack('>I', zlib.crc32(IHDR[4:]))
+sRGB = b'\x00\x00\x00\x01\x73\x52\x47\x42\x00\xAE\xCE\x1C\xE9'
+pixel = zlib.compress(b'\xff\x00\x00\x00\xff\x00\x00\x00\xff\x80\x80\x80')
+IDAT = struct.pack('>I', len(pixel)) + b'IDAT' + pixel
+IDAT += struct.pack('>I', zlib.crc32(IDAT[4:]))
+
+PNG_END = b'\x00\x00\x00\x00\x49\x45\x4e\x44\xae\x42\x60\x82'
+
+file = PNG_HEADER + IHDR + sRGB + IDAT + PNG_END
+
+with open('output/test.png', 'wb') as f:
+    f.write(file)
