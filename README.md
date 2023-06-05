@@ -8,7 +8,6 @@ Boutell, T. (1997). PNG (Portable Network Graphics) Specification Version 1.0. E
 ## compare.py
 The script consists of comparing the speed and compression level of "png", "jpeg" and "tiff".
 
-Results:
 ![Compression rate](graphs/compress_rate.png "Compression rate")
 ![Compression time](graphs/compress_time.png "Compression rate")
 
